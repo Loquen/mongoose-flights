@@ -1,0 +1,64 @@
+<%- include('../partials/header') %>
+
+<div class="flight">
+  <div>Airline: <%= flight.airline %></div>
+  <div>Flight Number: <%= flight.flightNo %></div>
+  <div>Departure Date: <%= flight.departs.toLocaleDateString() %></div>
+  <div>Departure Airport: <%= flight.airport %></div>
+  <% if(flight.destinations.length){%>
+    <br>
+    <h5>Desitnations:</h5>
+    <% flight.destinations = flight.destinations.sort(function(a,b){ %>
+      <% var c = new Date(a.arrival);%>
+      <% var d = new Date(b.arrival);%>
+      <% return c-d;%>
+    <% }); %>
+    <% flight.destinations.forEach(function(d){ %>
+      <div>Arrival Date: <%= d.arrival.toLocaleDateString() %></div>
+      <div>Arrival Airport: <%= d.airport %></div>
+  
+    <% }) %>
+  <% } %>
+</div>
+<br><hr>
+<div>  
+  <%console.log(tickets.destinations);%>
+  <h3>Tickets</h3>
+  <% if(tickets.length){ console.log(tickets);%>
+    
+    <% tickets.forEach(function(t){ %>
+      <div>Seat: <%= t.seat %></div>
+      <div>Price: <%= t.price %></div>
+
+    <% }) %>
+  <% } else {%>
+    <h5>No tickets yet</h5>
+  <% } %>
+  <a href='/flights/<%= flight._id %>/tickets/new' class="btn btn-info">New Ticket</a>
+</div>
+<br>
+<hr>
+<div class="destination">
+  <h3>Add Destination</h3>
+  <form action="/flights/<%= flight._id %>/destinations" method="POST">
+    <div class="form-group row">
+      <label>Airport:
+        <select name="airport" class="btn btn-secondary dropdown-toggle">
+          <option value="AUS">AUS</option>
+          <option value="DAL">DAL</option>
+          <option value="LAX">LAX</option>
+          <option value="SEA">SEA</option>
+        </select>
+      </label>
+    </div>
+    <div class="form-group row">
+      <label>Arrival Date:
+        <input type="datetime-local" name="arrival" >
+      </label>
+    </div>
+    <input class="btn btn-primary mb-2" type="submit" value="Add Destination">
+  </form>
+</div>
+
+
+<%- include('../partials/footer') %>
