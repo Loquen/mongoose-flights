@@ -21,13 +21,21 @@
       <% } %>
     </div>
     <div class="col-4">  
-      <%console.log(tickets.destinations);%>
+      <!-- <%console.log(tickets.destinations);%> -->
       <h3>Tickets</h3>
       <% if(tickets.length){ %>
         
         <% tickets.forEach(function(t){ %>
-          <div>Seat: <%= t.seat %></div>
-          <div>Price: <%= t.price %></div>
+          <div class="ticket">
+            <div>
+              <div >Seat: <%= t.seat %></div>
+              <div>Price: <%= t.price %></div>
+            </div>
+            <form action="/tickets/<%= t._id %>?_method=DELETE" method="POST">
+              <input class="btn btn-danger" type="submit" value="X">
+            </form>
+            <!-- <a href='/tickets/delete' class="btn btn-danger">X</a> -->
+          </div>
           <br>
         <% }) %>
       <% } else {%>

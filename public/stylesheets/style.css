@@ -25,3 +25,11 @@ th, td{
   padding: 10px;
   margin-right: 10px;
 }
+
+.ticket{
+  display: flex;
+  margin: 10px;
+}
+.ticket form{
+  margin: 5px 0px 0px 10px;
+}
