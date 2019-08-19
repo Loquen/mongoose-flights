@@ -46,11 +46,16 @@ function show(req, res){
   console.log(req.params.id);
   Flight.findById(req.params.id, function(err, flight){
     flight.destinations.sort({arrival: 'asc'});
+
+    let flightDestinations = flight.destinations.map(dest => dest.airport);
+    let validDestinations = ['AUS', 'DAL', 'LAX', 'SEA'].filter(dest => !flightDestinations.includes(dest));
+
     Ticket.find({ flight: flight._id}, function(err, tickets){
       res.render(`flights/show`, {
         title: `Flight ${flight.flightNo}`,
         flight, 
-        tickets
+        tickets,
+        validDestinations
       });
     });
   }); 

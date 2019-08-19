@@ -11,11 +11,12 @@ function create(req, res){
 }
 
 function deleteTicket(req, res, next){
-  let ticket = Ticket.findById(req.params.id, function(err){
-    let flight = Flight.findById(ticket.flight, function(err){
+  Ticket.findById(req.params.id, function(err, ticket){
+    Flight.findById(ticket.flight, function(err, flight){
       Ticket.deleteOne({'_id': req.params.id}, function(err){
         if(err) return res.render('flights');
-        res.redirect(`/flights`);
+        console.log(typeof flight.id , typeof flight._id);
+        res.redirect(`/flights/${flight._id}`);
       });
     });
   });
